@@ -9,6 +9,8 @@ const SignUp = () => {
     e.preventDefault();
     if (!email) {
       setErrEmail("Required Email.");
+    } else if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+       setErrEmail('Valid Email Required')
     }
   }
 
@@ -30,7 +32,7 @@ const SignUp = () => {
             </p>
 
             <form onSubmit={handleSubmit}>
-              <div className="relative mt-[40px]">
+              <div className="relative mt-[30px]">
                 <label
                   className="absolute top-[-14px] left-4 bg-white px-4"
                   htmlFor="email"
@@ -39,7 +41,7 @@ const SignUp = () => {
                 </label>
                 <input
                   onChange={handleEmail}
-                  className="border border-1 w-full p-6 rounded-lg text-lg text-primary"
+                  className="border border-1 w-full p-4 rounded-lg text-lg text-primary"
                   placeholder="Ladushing691@gmail.com"
                   type="email"
                   name="email"
@@ -54,7 +56,7 @@ const SignUp = () => {
                   </div>
                 )}
               </div>
-              <div className="relative mt-[40px]">
+              <div className="relative mt-[30px]">
                 <label
                   className="absolute top-[-14px] left-4 bg-white px-4"
                   htmlFor="name"
@@ -62,14 +64,14 @@ const SignUp = () => {
                   Full Name
                 </label>
                 <input
-                  className="border border-1 w-full p-6 rounded-lg text-lg text-primary"
+                  className="border border-1 w-full p-4 rounded-lg text-lg text-primary"
                   placeholder="Ladushing GTG"
                   type="text"
                   name="name"
                   id="name"
                 />
               </div>
-              <div className="relative mt-[40px]">
+              <div className="relative mt-[30px]">
                 <label
                   className="absolute top-[-14px] left-4 bg-white px-4"
                   htmlFor="password"
@@ -77,7 +79,7 @@ const SignUp = () => {
                   Password
                 </label>
                 <input
-                  className="border border-1 w-full p-6 rounded-lg text-lg text-primary"
+                  className="border border-1 w-full p-4 rounded-lg text-lg text-primary"
                   placeholder="********"
                   type="password"
                   name="password"
@@ -86,7 +88,7 @@ const SignUp = () => {
               </div>
 
               <button
-                className="py-5 w-full bg-[#5F35F5] rounded-full mt-[40px] text-white text-lg font-semibold"
+                className="py-4 w-full bg-[#5F35F5] rounded-full mt-[30px] text-white text-lg font-semibold"
                 type="submit"
               >
                 Sign Up
