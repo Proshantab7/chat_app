@@ -1,22 +1,63 @@
 import { useState } from "react";
 import { MdError } from "react-icons/md";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Audio } from "react-loader-spinner";
 
 const SignUp = () => {
+  const auth = getAuth();
   const [email, setEmail] = useState("");
   const [errEmail, setErrEmail] = useState(false);
+  const [name, setName] = useState("");
+  const [errName, setErrName] = useState(false);
+  const [password, setPassword] = useState("");
+  const [errPassword, setErrPassword] = useState(false);
+  const [loader, setLoader] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!email) {
       setErrEmail("Required Email.");
-    } else if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
-       setErrEmail('Valid Email Required')
+    } else if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      setErrEmail("Valid Email Required");
+    }
+
+    if (!name) {
+      setErrName("Required Name.");
+    }
+
+    if (!password) {
+      setErrPassword("Required Password");
+    }
+
+    if (email && name && password) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          setLoader(true);
+          setTimeout(()=>{
+            setLoader(false);
+          }, 3000);
+        })
+        .catch((error) => {
+          if (error.code == "auth/email-already-in-use") {
+            setErrEmail("Already registered this Email.");
+          }
+        });
     }
   }
 
   const handleEmail = (e) => {
     setEmail(e.target.value);
     setErrEmail(false);
+  };
+
+  const handleName = (e) => {
+    setName(e.target.value);
+    setErrName(false);
+  };
+
+  const handlePassword = (e) => {
+    setPassword(e.target.value);
+    setErrPassword(false);
   };
 
   return (
@@ -64,12 +105,21 @@ const SignUp = () => {
                   Full Name
                 </label>
                 <input
+                  onChange={handleName}
                   className="border border-1 w-full p-4 rounded-lg text-lg text-primary"
                   placeholder="Ladushing GTG"
                   type="text"
                   name="name"
                   id="name"
                 />
+                {errName && (
+                  <div>
+                    <p className="text-red-500 mt-3 font-nunito">{errName}</p>
+                    <div className="text-red-700 absolute top-6 text-xl right-4">
+                      <MdError />
+                    </div>
+                  </div>
+                )}
               </div>
               <div className="relative mt-[30px]">
                 <label
@@ -79,12 +129,26 @@ const SignUp = () => {
                   Password
                 </label>
                 <input
-                  className="border border-1 w-full p-4 rounded-lg text-lg text-primary"
+                  onChange={handlePassword}
+                  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,10}"
+                  required
+                  title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more than 10 characters"
+                  className="tracking-[.5rem] border border-1 w-full p-4 rounded-lg text-2xl text-primary"
                   placeholder="********"
                   type="password"
                   name="password"
                   id="password"
                 />
+                {errPassword && (
+                  <div>
+                    <p className="text-red-500 mt-3 font-nunito">
+                      {errPassword}
+                    </p>
+                    <div className="text-red-700 absolute top-6 text-xl right-4">
+                      <MdError />
+                    </div>
+                  </div>
+                )}
               </div>
 
               <button
@@ -93,6 +157,19 @@ const SignUp = () => {
               >
                 Sign Up
               </button>
+              {loader && (
+                <div className="flex justify-center">
+                  <Audio
+                    height="80"
+                    width="80"
+                    radius="9"
+                    color="green"
+                    ariaLabel="loading"
+                    wrapperStyle
+                    wrapperClass
+                  />
+                </div>
+              )}
 
               <p
                 href="#"
