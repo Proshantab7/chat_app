@@ -2,6 +2,8 @@ import { useState } from "react";
 import { MdError } from "react-icons/md";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { Audio } from "react-loader-spinner";
+import { FaEye } from "react-icons/fa";
+import { IoEyeOff } from "react-icons/io5";
 
 const SignUp = () => {
   const auth = getAuth();
@@ -12,6 +14,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [errPassword, setErrPassword] = useState(false);
   const [loader, setLoader] = useState(false);
+  const [eye, setEye] = useState(false);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -33,7 +36,7 @@ const SignUp = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           setLoader(true);
-          setTimeout(()=>{
+          setTimeout(() => {
             setLoader(false);
           }, 3000);
         })
@@ -59,6 +62,10 @@ const SignUp = () => {
     setPassword(e.target.value);
     setErrPassword(false);
   };
+
+  function handleEye() {
+    setEye(!eye);
+  }
 
   return (
     <div className="container pl-2">
@@ -135,18 +142,23 @@ const SignUp = () => {
                   title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more than 10 characters"
                   className="tracking-[.5rem] border border-1 w-full p-4 rounded-lg text-2xl text-primary"
                   placeholder="********"
-                  type="password"
+                  type= {eye? 'text': 'password'}
                   name="password"
                   id="password"
                 />
+                <div className="absolute top-6 text-xl right-4">
+                  {eye ? (
+                    <FaEye onClick={handleEye} />
+                  ) : (
+                    <IoEyeOff onClick={handleEye} />
+                  )}
+                </div>
+
                 {errPassword && (
                   <div>
                     <p className="text-red-500 mt-3 font-nunito">
                       {errPassword}
                     </p>
-                    <div className="text-red-700 absolute top-6 text-xl right-4">
-                      <MdError />
-                    </div>
                   </div>
                 )}
               </div>
