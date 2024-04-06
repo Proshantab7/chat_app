@@ -61,9 +61,9 @@ const SignUp = () => {
   };
 
   return (
-    <div>
-      <div className="flex">
-        <div className="w-1/2 flex justify-end mr-[70px] items-center">
+    <div className="container pl-2">
+      <div className=" md:flex">
+        <div className="md:w-1/2 flex justify-end mr-2 md:mr-[70px] items-center">
           <div className="">
             <h1 className="font-nunito text-primary font-bold text-[34.4px]">
               Get started with easily register
@@ -181,7 +181,7 @@ const SignUp = () => {
             </form>
           </div>
         </div>
-        <div className="w-2/4 ">
+        <div className="hidden  md:block w-2/4 ">
           <img
             className="w-full h-screen object-cover"
             src="signUp.png"
