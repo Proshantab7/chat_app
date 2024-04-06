@@ -41,8 +41,10 @@ const SignUp = () => {
           }, 3000);
         })
         .catch((error) => {
-          if (error.code == "auth/email-already-in-use") {
+          if (error.code.includes("auth/email-already-in-use")) {
             setErrEmail("Already registered this Email.");
+          } else {
+            alert(error.code);
           }
         });
     }
@@ -142,7 +144,7 @@ const SignUp = () => {
                   title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more than 10 characters"
                   className="tracking-[.5rem] border border-1 w-full p-4 rounded-lg text-2xl text-primary"
                   placeholder="********"
-                  type= {eye? 'text': 'password'}
+                  type={eye ? "text" : "password"}
                   name="password"
                   id="password"
                 />
@@ -169,8 +171,8 @@ const SignUp = () => {
               >
                 Sign Up
               </button>
-              {loader && (
-                <div className="flex justify-center">
+              { loader && 
+                <div className="flex flex-col gap-2 justify-center items-center">
                   <Audio
                     height="80"
                     width="80"
@@ -180,8 +182,9 @@ const SignUp = () => {
                     wrapperStyle
                     wrapperClass
                   />
+                  <p className="font-nunito text-lg font-bold">Sign Up Successfully.</p>
                 </div>
-              )}
+              }
 
               <p
                 href="#"
