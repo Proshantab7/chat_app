@@ -1,11 +1,11 @@
 
+import {Outlet} from 'react-router-dom'
 
-import SignUp from './pages/SignUp';
 
 const App = () => {
   return (
     <div>
-      <SignUp/>
+      <Outlet/>
     </div>
   )
 }

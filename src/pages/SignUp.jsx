@@ -4,6 +4,7 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { Audio } from "react-loader-spinner";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
+import { Link } from "react-router-dom";
 
 const SignUp = () => {
   const auth = getAuth();
@@ -191,7 +192,7 @@ const SignUp = () => {
                 className="font-nunito text-center mt-9 text-[#03014C]"
               >
                 Already have an account ?
-                <span className="text-[#EA6C00] font-bold"> Sign In</span>
+                <Link to='signin' className="text-[#EA6C00] font-bold"> Sign In</Link>
               </p>
             </form>
           </div>
