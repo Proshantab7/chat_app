@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import firebaseConfig from "./firebase.config.js";
+import {app, auth} from "./firebase.config.js";
 import {
   createRoutesFromElements,
   createBrowserRouter,
@@ -12,6 +12,7 @@ import {
 
 import SignIn from "./pages/SignIn.jsx";
 import SignUp from "./pages/SignUp.jsx";
+import Home from "./pages/Home.jsx";
 
 
 const router = createBrowserRouter(
@@ -19,6 +20,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />}>
       <Route path="signin" element={<SignIn/>} />
       <Route index element={<SignUp/>} />
+      <Route path = 'home' element = {<Home/>}/>
     </Route>
   )
 );

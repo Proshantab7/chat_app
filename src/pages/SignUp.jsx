@@ -5,8 +5,11 @@ import { Audio } from "react-loader-spinner";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { getDatabase, ref, set } from "firebase/database";
 
 const SignUp = () => {
+  const database = getDatabase();
+  const db = getDatabase();
   const auth = getAuth();
   const [email, setEmail] = useState("");
   const [errEmail, setErrEmail] = useState(false);
@@ -36,10 +39,17 @@ const SignUp = () => {
     if (email && name && password) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
+          const user = userCredential.user;
           setLoader(true);
           setTimeout(() => {
             setLoader(false);
           }, 3000);
+
+          set(ref(db, 'users/'+ user.uid), {
+            username: name,
+            email: email,
+          });
+
         })
         .catch((error) => {
           if (error.code.includes("auth/email-already-in-use")) {
@@ -48,6 +58,8 @@ const SignUp = () => {
             alert(error.code);
           }
         });
+
+
     }
   }
 
